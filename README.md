@@ -41,7 +41,7 @@ You can query dialogue nodes like the following:
 
 ```graphql
 {
-  allDialogue {
+  allDialogueWise {
     edges {
       node {
         slug
@@ -57,7 +57,7 @@ To filter by the `slug` you specified in the config:
 
 ```graphql
 {
-  allFile(filter: { slug: { eq: "hero-section" } }) {
+  allDialogueWise(filter: { slug: { eq: "hero-section" } }) {
     edges {
       node {
         slug
@@ -82,7 +82,7 @@ export default function DwDemo({ data }) {
     <div>
       <h1>DialogueWise Demo</h1>
 
-      {data.allDialogue.edges.map(({ node }) => (
+      {data.allDialogueWise.edges.map(({ node }) => (
         JSON.parse(node.content).map( (content, index) => (
             <div key={index} dangerouslySetInnerHTML={{ __html: content['hero-section'] }} />)
         )
@@ -93,7 +93,7 @@ export default function DwDemo({ data }) {
 
 export const query = graphql`
 query {
-  allDialogue(filter: {slug: {eq: "home-content"}}) {
+  allDialogueWise(filter: {slug: {eq: "home-content"}}) {
     edges {
       node {
         content
