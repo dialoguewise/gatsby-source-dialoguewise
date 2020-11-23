@@ -113,7 +113,7 @@ exports.sourceNodes = async (
   nodes.forEach((node) =>
     createNode({
       ...node,
-      id: createNodeId(`${DIALOGUE_NODE_TYPE}-${node.name}`),
+      id: createNodeId(`${DIALOGUE_NODE_TYPE}-${node.slug}`),
       parent: null,
       children: [],
       internal: {
