@@ -1,0 +1,27 @@
+{
+  "name": "gatsby-source-dialoguewise",
+  "version": "3.0.0",
+  "description": "Gatsby source plugin for building websites using Dialoguewise CMS as a data source.",
+  "main": "index.js",
+  "bugs": {
+    "url": "https://github.com/dialoguewise/gatsby-source-dialoguewise/issues"
+  },
+  "homepage": "https://github.com/dialoguewise/gatsby-source-dialoguewise#readme",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dialoguewise/gatsby-source-dialoguewise.git"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "gatsby-source-plugin",
+    "gatsby cms source",
+    "dialoguewise",
+    "headless cms",
+    "cms"
+  ],
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  }
+}

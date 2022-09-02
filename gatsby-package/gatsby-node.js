@@ -1,7 +1,4 @@
 const fetch = require("node-fetch");
-const moment = require("moment");
-const crypto = require("crypto");
-
 const DIALOGUE_NODE_TYPE = `DialogueWise`;
 
 function isValid(param) {
@@ -14,71 +11,49 @@ exports.sourceNodes = async (
 ) => {
   const { createNode } = actions;
 
-  const apiBaseUrl = "https://api.dialoguewise.com/api/";
   const requests = {
     ...{
-      apiKey: "",
-      emailHash: "",
+      accessToken: "",
       dialogues: [],
     },
     ...pluginOptions,
   };
+  const apiBaseUrl =
+    (typeof requests.apiBaseUrl !== "undefined"
+      ? requests.apiBaseUrl
+      : "https://api.dialoguewise.com") + "/api/";
 
   var nodes = [];
 
   for (const dialogue of requests.dialogues) {
-    // make sure we have the mandatory dialougeName
     if (!isValid(dialogue.slug)) {
-      throw "Dialogue Slug field is mandatory";
+      throw "Please provide a slug";
     }
 
     //The page flag allows you to get paginated data. If not passed it will return all data.
-    var pageFlag = "";
     if (
       (!isValid(dialogue.pageSize) && isValid(dialogue.pageIndex)) ||
       (isValid(dialogue.pageSize) && !isValid(dialogue.pageIndex))
     ) {
       throw "Please set both pageSize and pageIndex";
-    } else if (isValid(dialogue.pageSize) && isValid(dialogue.pageIndex)) {
-      pageFlag =
-        "&pageSize=" +
-        String(dialogue.pageSize) +
-        "&pageIndex=" +
-        String(dialogue.pageIndex);
     }
 
     const request = {
-      apiKey: requests.apiKey,
-      emailHash: requests.emailHash,
       slug: dialogue.slug,
-      isPilot: dialogue.isPilot,
-      variableList: dialogue.variableList,
+      isPilotVersion: dialogue.isPilot,
+      variables: dialogue.variableList,
+      pageSize: dialogue.pageSize,
+      pageIndex: dialogue.pageIndex,
     };
 
-    const currentUtc = moment.utc().format("DD/MM/YYYY hh:mm:ss a");
-    const isPilotFlag = request.isPilot ? "&isPilotVersion=true" : "";
-    const apiUrl =
-      apiBaseUrl +
-      "dialogue/getdialogue?dialogueName=" +
-      request.slug +
-      isPilotFlag +
-      pageFlag;
+    const apiUrl = apiBaseUrl + "dialogue/getContents";
 
-    const message = "/api/dialogue/getdialogue:" + currentUtc;
-    const key = request.apiKey;
-    const hashMessage = crypto
-      .createHmac("sha256", key)
-      .update(message)
-      .digest("base64");
-
-    const authentication = request.emailHash + ":" + hashMessage;
     const headers = {
       "Content-Type": "application/json",
-      Timestamp: currentUtc,
-      Authentication: authentication,
+      "Access-Token": requests.accessToken,
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "*",
-      "Access-Control-Allow-Headers": "Content-Type, Timestamp, Authentication",
+      "Access-Control-Allow-Headers": "Content-Type, Access-Token",
     };
 
     var nodeDialogueData = {
@@ -90,17 +65,15 @@ exports.sourceNodes = async (
       const response = await fetch(apiUrl, {
         method: "post",
         headers: headers,
-        body: request.variableList
-          ? JSON.stringify(request.variableList)
-          : null,
+        body: JSON.stringify(request),
       });
 
       if (response.status !== 200) {
         nodeDialogueData.error = response.statusText;
       } else {
         const respJson = await response.json();
-        nodeDialogueData.content = respJson.dialogue
-          ? JSON.stringify(respJson.dialogue)
+        nodeDialogueData.content = respJson.data
+          ? JSON.stringify(respJson.data.contents)
           : "";
       }
     } catch (err) {
