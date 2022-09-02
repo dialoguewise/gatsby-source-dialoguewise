@@ -1,5 +1,5 @@
 const fetch = require("node-fetch");
-const DIALOGUE_NODE_TYPE = `DialogueWise`;
+const DIALOGUE_NODE_TYPE = `Dialoguewise`;
 
 function isValid(param) {
   return !(param == null || String(param).trim() == "");

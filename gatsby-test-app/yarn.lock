@@ -4971,11 +4971,11 @@
     "@types/sharp" "^0.30.5"
     "sharp" "^0.30.7"
 
-"gatsby-source-dialoguewise@file:../gatsby-package":
-  "resolved" "file:../gatsby-package"
-  "version" "0.2.0"
+"gatsby-source-dialoguewise@^3.0.0":
+  "integrity" "sha512-nxJpMYp081VXqdtPFwOaPd0BBockQQCkL+vzh/GZa3xRFh8yTaH+Zp/qX/nG8B7oJQWn0L7JHHkeMO4XvV3YDA=="
+  "resolved" "https://registry.npmjs.org/gatsby-source-dialoguewise/-/gatsby-source-dialoguewise-3.0.0.tgz"
+  "version" "3.0.0"
   dependencies:
-    "moment" "^2.26.0"
     "node-fetch" "^2.6.0"
 
 "gatsby-telemetry@^3.22.0":
@@ -6684,7 +6684,7 @@
   "resolved" "https://registry.npmjs.org/node-addon-api/-/node-addon-api-5.0.0.tgz"
   "version" "5.0.0"
 
-"node-fetch@^2.6.6", "node-fetch@^2.6.7", "node-fetch@2", "node-fetch@2.6.7":
+"node-fetch@^2.6.0", "node-fetch@^2.6.6", "node-fetch@^2.6.7", "node-fetch@2", "node-fetch@2.6.7":
   "integrity" "sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ=="
   "resolved" "https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.7.tgz"
   "version" "2.6.7"
